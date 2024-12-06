@@ -45,7 +45,7 @@ public class DestroyBulletsWithCircle : MonoBehaviour
         foreach (Collider2D collider in colliders)
         {
             // If the collider is a bullet, destroy it
-            if (collider.CompareTag("Bullet"))
+            if (collider.CompareTag("ParryableBullet"))
             {
                 Destroy(collider.gameObject);
             }
