@@ -11,6 +11,9 @@ public class DestroyBulletsWithCircle : MonoBehaviour
     // Timer to track cooldown
     private float cooldownTimer = 0f;
 
+    // The player's position (this will be the center of the circle)
+    private Vector2 playerPosition;
+
     void Update()
     {
         // Update the cooldown timer
@@ -19,10 +22,13 @@ public class DestroyBulletsWithCircle : MonoBehaviour
             cooldownTimer -= Time.deltaTime;
         }
 
-        // Check for left mouse button click
+        // Update the player's position
+        playerPosition = transform.position;
+
+        // Check for left mouse button click and ensure cooldown has expired
         if (Input.GetMouseButtonDown(0) && cooldownTimer <= 0f)
         {
-            // Perform the detection and destroy bullets
+            // Perform the detection and destroy bullets within the circle around the player
             DestroyBulletsInCircle();
 
             // Reset the cooldown timer
@@ -32,11 +38,8 @@ public class DestroyBulletsWithCircle : MonoBehaviour
 
     void DestroyBulletsInCircle()
     {
-        // Get the position of the mouse in world space
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-        // Find all colliders within the circle at the mouse position
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(mousePosition, circleRadius);
+        // Find all colliders within the circle around the player
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(playerPosition, circleRadius);
 
         // Iterate through each collider
         foreach (Collider2D collider in colliders)
@@ -53,7 +56,13 @@ public class DestroyBulletsWithCircle : MonoBehaviour
     void OnDrawGizmos()
     {
         // Only draw the circle in the editor
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, circleRadius);
+        if (cooldownTimer <= 0f)
+        {
+            // Set the Gizmos color to red
+            Gizmos.color = Color.red;
+
+            // Draw the circle at the player's position
+            Gizmos.DrawWireSphere(playerPosition, circleRadius);
+        }
     }
 }
