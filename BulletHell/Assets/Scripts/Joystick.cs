@@ -14,13 +14,13 @@ public class Joystick : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Vector2 moveDirection = moveActionToUse.action.ReadValue<Vector2>();
-        transform.Translate(moveDirection * speed * Time.deltaTime);
+      
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Vector2 moveDirection = moveActionToUse.action.ReadValue<Vector2>();
+        transform.Translate(moveDirection * speed * Time.deltaTime);
     }
 }
