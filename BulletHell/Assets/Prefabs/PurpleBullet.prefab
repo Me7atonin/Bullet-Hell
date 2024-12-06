@@ -233,7 +233,6 @@ GameObject:
   - component: {fileID: 4809274178985797020}
   - component: {fileID: 7951819141298851675}
   - component: {fileID: 5665120105705669682}
-  - component: {fileID: 4807625081461790284}
   m_Layer: 0
   m_Name: PurpleBullet
   m_TagString: Untagged
@@ -338,7 +337,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &7951819141298851675
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -387,19 +386,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifetime: 5
---- !u!114 &4807625081461790284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3832233531261634841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc41925104b431a44afbd32decb3d6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bounceFactor: 0.8
 --- !u!1 &4229943419450808237
 GameObject:
   m_ObjectHideFlags: 0
