@@ -11,6 +11,7 @@ public class PlatformerMovement : MonoBehaviour
     bool grounded = false;
     Rigidbody2D rb;
     Animator anim;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,20 +22,28 @@ public class PlatformerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float moveX = Input.GetAxis("Horizontal");
-        Vector2 velocity = GetComponent<Rigidbody2D>().velocity;
-        velocity.x = moveX * moveSpeed;
-        GetComponent<Rigidbody2D>().velocity = velocity;
-        //need to find a way tp know if we are on the ground
-        if (Input.GetButtonDown("Jump") && grounded)
+        // Get horizontal movement input from either keyboard or mobile joystick
+        float moveX = Input.GetAxis("Horizontal"); // Handles both keyboard and mobile joystick input
+
+        Vector2 velocity = rb.velocity;
+        velocity.x = moveX * moveSpeed; // Apply movement to the Rigidbody2D
+        rb.velocity = velocity;
+
+        // Handle jumping (both keyboard and mobile)
+        if (Input.GetButtonDown("Jump") && grounded) // "Jump" works for both keyboard space and mobile buttons
         {
             rb.AddForce(new Vector2(0, 100 * jumpSpeed));
             grounded = false;
         }
+
+        // Set animation parameters
         anim.SetFloat("y", velocity.y);
         anim.SetBool("grounded", grounded);
-        int x = (int)Input.GetAxisRaw("Horizontal");
+
+        int x = (int)Input.GetAxisRaw("Horizontal"); // Get raw horizontal input (either -1, 0, or 1)
         anim.SetInteger("x", x);
+
+        // Flip sprite based on direction (for left-right movement)
         if (x > 0)
         {
             GetComponent<SpriteRenderer>().flipX = false;
@@ -44,17 +53,20 @@ public class PlatformerMovement : MonoBehaviour
             GetComponent<SpriteRenderer>().flipX = true;
         }
     }
+
+    // Detect when the player touches the ground (e.g., collides with the ground layer)
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 6)
+        if (collision.gameObject.layer == 6) // Layer 6 represents the ground
         {
             grounded = true;
         }
     }
+
+    // Detect when the player leaves the ground
     private void OnTriggerExit2D(Collider2D collision)
     {
-        
-        if(collision.gameObject.layer == 6)
+        if (collision.gameObject.layer == 6) // Layer 6 represents the ground
         {
             grounded = false;
         }
