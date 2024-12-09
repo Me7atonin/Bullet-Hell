@@ -273,19 +273,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 127291546}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 110d36cc15f465847a0a3ec622364259, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c38f3ef383fd594d9ea06b34ae0e874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  jumpSpeed: 2
-  grounded: 1
-  rb: {fileID: 0}
-  anim: {fileID: 0}
-  moveActionReference: {fileID: 0}
-  groundColliderHeight: 0.025
-  myCollider: {fileID: 0}
-  layerMask:
-    m_Bits: 0
+  moveActionToUse: {fileID: 5916180952748264143, guid: 5278163c84513d04a89c5fb29747ce86, type: 3}
+  moveSpeed: 10
+  JumpSpeed: 5
 --- !u!4 &127291554 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 674015742714913145, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
@@ -367,7 +360,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5881992811373226728, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
       propertyPath: m_GravityScale
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4243207832931173688, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
@@ -478,7 +471,7 @@ MonoBehaviour:
   m_Behaviour: 0
   m_UseIsolatedInputActions: 0
   m_PointerDownAction:
-    m_Name: 
+    m_Name: Pointer Down
     m_Type: 0
     m_ExpectedControlType: 
     m_Id: 346f56d3-0905-4cb7-81f5-5b6b83870075
@@ -487,7 +480,7 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   m_PointerMoveAction:
-    m_Name: 
+    m_Name: Pointer Move
     m_Type: 0
     m_ExpectedControlType: 
     m_Id: 47d1ce98-6ea3-408b-95fc-50f72db6aecd
@@ -507,7 +500,6 @@ GameObject:
   - component: {fileID: 925140194}
   - component: {fileID: 925140193}
   - component: {fileID: 925140192}
-  - component: {fileID: 925140196}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -591,6 +583,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 652096131}
+  - {fileID: 1887933135}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -598,20 +591,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &925140196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 925140191}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c38f3ef383fd594d9ea06b34ae0e874, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveActionToUse: {fileID: 0}
-  speed: 0
 --- !u!1 &1648412344
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,12 +773,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1887933134}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 558.3705, y: 257.6629, z: -3.3797667}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -59.10676, y: -36.031948, z: -2.9108036}
+  m_LocalScale: {x: 0.86124396, y: 0.86124396, z: 0.86124396}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 925140195}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2021334317
 GameObject:
@@ -885,7 +864,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 925140195}
-  - {fileID: 1887933135}
   - {fileID: 468999822}
   - {fileID: 2021334320}
   - {fileID: 1648412348}
