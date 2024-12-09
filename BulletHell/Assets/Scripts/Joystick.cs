@@ -10,18 +10,19 @@ public class Joystick : MonoBehaviour
     [SerializeField]
     private float moveSpeed = 10f;
     private InputAction moveAction;
-
+    public float JumpSpeed = 5f;
+    bool isGrounded;
     // Start is called before the first frame update
     void Start()
     {
-        moveAction = moveActionToUse.action; // Cache the reference to the InputAction
-        moveAction.Enable(); // Ensure input action is enabled
+        moveAction = moveActionToUse.action; 
+        moveAction.Enable(); 
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Get the movement vector from the input system
+        
         Vector2 moveInput = moveAction.ReadValue<Vector2>();
 
         // Only use the horizontal (x) movement
