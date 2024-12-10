@@ -308,7 +308,7 @@ GameObject:
   - component: {fileID: 925140193}
   - component: {fileID: 925140192}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Mobile Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
