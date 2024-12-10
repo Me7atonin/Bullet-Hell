@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
-public class Joystick : MonoBehaviour
+public class Joystick : MonoBehaviour,IPointerUpHandler,IPointerDownHandler
 {
     [SerializeField]
     private InputActionReference moveActionToUse;
@@ -11,7 +12,8 @@ public class Joystick : MonoBehaviour
     private float moveSpeed = 10f;
     private InputAction moveAction;
     public float JumpSpeed = 5f;
-    bool isGrounded;
+    bool Grounded = false;
+    Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,19 +27,52 @@ public class Joystick : MonoBehaviour
         
         Vector2 moveInput = moveAction.ReadValue<Vector2>();
 
-        // Only use the horizontal (x) movement
-        moveInput.y = 0; // Set vertical movement to 0
+        moveInput.y = 0; 
 
-        // Optionally normalize if you want consistent movement speed
         if (moveInput.magnitude > 1)
         {
             moveInput.Normalize();
         }
 
-        // Apply the movement using transform.Translate (directly moving the character)
+        
         transform.Translate(moveInput.x * moveSpeed * Time.deltaTime, 0, 0);
 
-        // Debug log to check position
+        
         Debug.Log("New Position: " + transform.position);
+
+        if (Input.GetButtonDown("Jump") && Grounded) 
+        {
+            rb.AddForce(new Vector2(0, 100 * JumpSpeed));
+            Grounded = false;
+        }
+
+    }
+
+   
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 6)
+        {
+            Grounded = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == 6)
+        {
+            Grounded = false;
+        }
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        throw new System.NotImplementedException();
     }
 }
