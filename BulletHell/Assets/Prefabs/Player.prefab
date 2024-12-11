@@ -155,6 +155,8 @@ GameObject:
   - component: {fileID: 7823044885636674399}
   - component: {fileID: 4822634193763227969}
   - component: {fileID: 3658030208035053471}
+  - component: {fileID: 6340119950032474797}
+  - component: {fileID: 5307288436292482704}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -436,6 +438,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   jumpSpeed: 5
+--- !u!114 &6340119950032474797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605452631890082235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77b9851ed108ec749bbcaa751ddfe9a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  damageMultiplier: 1
+--- !u!114 &5307288436292482704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605452631890082235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f13602017de8f54d841e2dfdb5bf27f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 9
+  jumpForce: 20
+  wallJumpForce: 12
+  wallSlideSpeed: 2
+  maxWallJumps: 10
+  wallCheckDistance: 0.5
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &4596007945094587820
 GameObject:
   m_ObjectHideFlags: 0
