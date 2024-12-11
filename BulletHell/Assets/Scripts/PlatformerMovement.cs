@@ -37,20 +37,20 @@ public class PlatformerMovement : MonoBehaviour
         }
 
         // Set animation parameters
-        anim.SetFloat("y", velocity.y);
-        anim.SetBool("grounded", grounded);
+        //anim.SetFloat("y", velocity.y);
+        //anim.SetBool("grounded", grounded);
 
         int x = (int)Input.GetAxisRaw("Horizontal"); // Get raw horizontal input (either -1, 0, or 1)
-        anim.SetInteger("x", x);
+        //anim.SetInteger("x", x);
 
         // Flip sprite based on direction (for left-right movement)
-        if (x > 0)
+        //if (x > 0)
         {
-            GetComponent<SpriteRenderer>().flipX = false;
+           // GetComponent<SpriteRenderer>().flipX = false;
         }
-        else if (x < 0)
+        //else if (x < 0)
         {
-            GetComponent<SpriteRenderer>().flipX = true;
+            //GetComponent<SpriteRenderer>().flipX = true;
         }
     }
 
