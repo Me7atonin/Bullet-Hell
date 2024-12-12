@@ -2,47 +2,47 @@ using UnityEngine;
 
 public class HomingBullet : MonoBehaviour
 {
-    // Reference to the player
-    public Transform player;
+    public float speed = 10f;  // Speed of the bullet
+    public float homingStrength = 5f;  // How strong the homing behavior is
+    private Transform target;  // Reference to the player's transform (target for homing)
 
-    // Speed of the bullet
-    public float speed = 5f;
-
-    // Homing strength (how fast it adjusts its direction)
-    public float homingStrength = 5f;
-
-    // Optionally, set a maximum homing angle to avoid the bullet spinning too aggressively
-    public float maxHomingAngle = 45f;
-
-    void Start()
+    private void Start()
     {
-        // If no player is assigned, try to find the player by tag
-        if (player == null)
+        // Search for the player object by tag
+        target = GameObject.FindGameObjectWithTag("Player")?.transform;
+
+        // If no player is found, log a warning
+        if (target == null)
         {
-            player = GameObject.FindWithTag("Player").transform;
+            Debug.LogWarning("No player object found. The homing bullet will not function properly.");
         }
     }
 
-    void Update()
+    private void Update()
     {
-        // Ensure the player exists before calculating direction
-        if (player != null)
+        if (target != null)
         {
-            // Calculate the direction vector from the bullet to the player
-            Vector3 directionToPlayer = (player.position - transform.position).normalized;
+            // Calculate the direction to the player
+            Vector3 directionToPlayer = (target.position - transform.position).normalized;
 
-            // Calculate the angle between the bullet's current direction and the target direction
-            float angle = Vector3.Angle(transform.up, directionToPlayer);
+            // Smoothly rotate towards the player using Slerp
+            Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward, directionToPlayer);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, homingStrength * Time.deltaTime);
 
-            // Apply the homing strength to adjust the bullet's velocity
-            if (angle < maxHomingAngle)
-            {
-                // Rotate the bullet's direction smoothly toward the player
-                transform.up = Vector3.RotateTowards(transform.up, directionToPlayer, homingStrength * Time.deltaTime, 0f);
-            }
-
-            // Move the bullet in the direction it is facing
-            transform.position += transform.up * speed * Time.deltaTime;
+            // Move the bullet forward in the direction of its current rotation
+            transform.position += transform.up * speed * Time.deltaTime;  // Move the bullet in the new direction
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        // Handle collision with player or other objects
+        if (other.CompareTag("Player"))
+        {
+            // Destroy the bullet when it hits the player
+            Destroy(gameObject);
+        }
+
+        // Add additional collision checks if needed (e.g., for walls or obstacles)
     }
 }
