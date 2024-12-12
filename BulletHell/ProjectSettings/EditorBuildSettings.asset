@@ -9,8 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu PC.unity
     guid: 22543ac5b37c89848bee040aa929c22b
   - enabled: 1
+    path: Assets/Mobile S/Menu Mobile.unity
+    guid: 5dbcfca54697edb4c953e8d74356675c
+  - enabled: 1
     path: Assets/Scenes/Difficulty PC.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Mobile S/Difficulty Mobile.unity
+    guid: 01fbfc7bc8d77fd47b4c9949f8b5145b
   - enabled: 1
     path: Assets/Scenes/Level 1.unity
     guid: 99b6d97e9da79ba44b40dfd285741cee
