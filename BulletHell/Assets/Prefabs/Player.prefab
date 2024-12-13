@@ -253,6 +253,7 @@ GameObject:
   - component: {fileID: 3658030208035053471}
   - component: {fileID: 6340119950032474797}
   - component: {fileID: 5307288436292482704}
+  - component: {fileID: 1265798483562492136}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -505,7 +506,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   circleRadius: 1
-  cooldownTime: 0.5
+  cooldownTime: 0.1
+  destructionSound: {fileID: 0}
+  destructionEffectPrefab: {fileID: 0}
+  effectOffset: {x: 0.2, y: 0}
+  effectLifetime: 0.4
 --- !u!114 &3658030208035053471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -519,7 +524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  jumpSpeed: 10
+  jumpSpeed: 12
 --- !u!114 &6340119950032474797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,8 +537,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77b9851ed108ec749bbcaa751ddfe9a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 1
   damageMultiplier: 1
+  healthText: {fileID: 0}
+  immunityTime: 1
+  gameOverSceneName: Defeat 1
 --- !u!114 &5307288436292482704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -547,14 +555,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 9
-  jumpForce: 10
-  wallJumpForce: 12
+  jumpForce: 20
+  wallJumpForce: 20
   wallSlideSpeed: 2
   maxWallJumps: 10
   wallCheckDistance: 0.5
   wallLayer:
     serializedVersion: 2
     m_Bits: 8
+--- !u!114 &1265798483562492136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605452631890082235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5891aca515f529b4aba8e5cbca0e7525, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRadius: 1
+  circlePrefab: {fileID: 886466465772461023, guid: 9106c3ba2d4bb1445942075de4c6f9f6, type: 3}
+  parryableCirclePrefab: {fileID: 0}
+  fadeDuration: 0.25
 --- !u!1 &4596007945094587820
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,7 +685,7 @@ TrailRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -10
   m_Time: 0.5
-  m_PreviewTimeScale: 0.35
+  m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
