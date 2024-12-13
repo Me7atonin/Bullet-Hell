@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu PC.unity
     guid: 22543ac5b37c89848bee040aa929c22b
   - enabled: 1
+    path: Assets/Scenes/Platforms.unity
+    guid: cf368fa2d86628c459aa1138a7c46746
+  - enabled: 1
     path: Assets/Mobile S/Menu Mobile.unity
     guid: 5dbcfca54697edb4c953e8d74356675c
   - enabled: 1
