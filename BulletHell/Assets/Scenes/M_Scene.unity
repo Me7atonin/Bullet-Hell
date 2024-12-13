@@ -3112,7 +3112,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6340119950032474797, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
       propertyPath: health
-      value: 15
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6340119950032474797, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
       propertyPath: healthText
@@ -3120,7 +3120,7 @@ PrefabInstance:
       objectReference: {fileID: 146532862}
     - target: {fileID: 6340119950032474797, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
       propertyPath: gameOverSceneName
-      value: 
+      value: Defeat 1
       objectReference: {fileID: 0}
     - target: {fileID: 7198388824325861214, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
       propertyPath: m_PreviewTimeScale

@@ -68,8 +68,16 @@ public class PlayerHealth : MonoBehaviour
     {
         Debug.Log("Player is dead!");
 
-        // Load the scene specified in the "gameOverSceneName" variable
-        SceneManager.LoadScene(gameOverSceneName);
+        // Ensure the scene name is valid and exists in the build settings
+        if (!string.IsNullOrEmpty(gameOverSceneName))
+        {
+            // Load the scene specified in the "gameOverSceneName" variable
+            SceneManager.LoadScene(gameOverSceneName);
+        }
+        else
+        {
+            Debug.LogError("Scene name is empty or invalid!");
+        }
     }
 
     // Method to update the health UI text
