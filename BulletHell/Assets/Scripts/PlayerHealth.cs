@@ -10,6 +10,8 @@ public class PlayerHealth : MonoBehaviour
     public Text healthText;  // Reference to the UI Text component that displays health
     public float immunityTime = 1f;  // Duration of immunity time in seconds
 
+    public string gameOverSceneName = "GameOver";  // Name of the scene to load when the player dies
+
     private bool isImmune = false;  // Flag to check if player is immune to damage
 
     private void Start()
@@ -20,10 +22,10 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Check if the object that collided is a bullet
-        if (other.CompareTag("Bullet") && !isImmune)
+        // Check if the object that collided is a bullet (either "Bullet" or "ParryableBullet")
+        if ((other.CompareTag("Bullet") || other.CompareTag("ParryableBullet")) && !isImmune)
         {
-            // Get the bullet's damage from the Bullet script
+            // Get the bullet's damage from the Bullet script (assumes Bullet script has a "damage" property)
             float bulletDamage = other.GetComponent<Bullet>().damage;
 
             // Apply damage to the player's health, using the damage multiplier
@@ -66,9 +68,16 @@ public class PlayerHealth : MonoBehaviour
     {
         Debug.Log("Player is dead!");
 
-        // Load the "GameOver" scene or any other scene of your choice
-        // Replace "GameOver" with the name of your desired scene
-        SceneManager.LoadScene("GameOver");
+        // Ensure the scene name is valid and exists in the build settings
+        if (!string.IsNullOrEmpty(gameOverSceneName))
+        {
+            // Load the scene specified in the "gameOverSceneName" variable
+            SceneManager.LoadScene(gameOverSceneName);
+        }
+        else
+        {
+            Debug.LogError("Scene name is empty or invalid!");
+        }
     }
 
     // Method to update the health UI text

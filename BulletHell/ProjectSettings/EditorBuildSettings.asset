@@ -38,5 +38,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level 4.unity
     guid: 465f43963db18b24dafb0d8f9b202bfe
+  - enabled: 1
+    path: Assets/Scenes/M_Scene.unity
+    guid: a186f9b8d1d837d4da3749aff2273731
+  - enabled: 1
+    path: Assets/Scenes/Defeat 1.unity
+    guid: c0b475a8d3a09f94e925973e7ccde5c9
+  - enabled: 1
+    path: Assets/Scenes/Win PC.unity
+    guid: be722c8f2ddc11c4888728a3d6acfffb
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 5278163c84513d04a89c5fb29747ce86, type: 3}
