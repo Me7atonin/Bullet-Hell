@@ -27,6 +27,9 @@ EditorBuildSettings:
     path: Assets/Scenes/HTP PC.unity
     guid: f2efb9bb251ae2b42a773a7a72348511
   - enabled: 1
+    path: Assets/Scenes/HTP PC 1.unity
+    guid: 233dc1fb21116b44e97d186e8ee6cef7
+  - enabled: 1
     path: Assets/Scenes/Level 1.unity
     guid: 99b6d97e9da79ba44b40dfd285741cee
   - enabled: 1
