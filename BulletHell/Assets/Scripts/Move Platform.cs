@@ -1,18 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MovePlatform : MonoBehaviour
+public class MoveUp : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float speed = 5f;  // The speed at which the object moves up
 
     // Update is called once per frame
     void Update()
     {
-        
+        // Move the object upwards by modifying its position
+        transform.Translate(Vector2.up * speed * Time.deltaTime);
     }
 }

@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class DestroyBulletsWithCircle : MonoBehaviour
 {
-    // The radius of the circle when left-clicking
+    // The radius of the circle when left-clicking or pressing Enter
     public float circleRadius = 3f;
 
-    // Cooldown time in seconds (optional, if you want to limit how often the player can click)
+    // Cooldown time in seconds (optional, if you want to limit how often the player can click/press Enter)
     public float cooldownTime = 1f;
 
     // Timer to track cooldown
@@ -40,8 +40,8 @@ public class DestroyBulletsWithCircle : MonoBehaviour
         // Update the player's position
         playerPosition = transform.position;
 
-        // Check for left mouse button click and ensure cooldown has expired
-        if (Input.GetMouseButtonDown(0) && cooldownTimer <= 0f)
+        // Check for left mouse button click or Enter key press and ensure cooldown has expired
+        if ((Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return)) && cooldownTimer <= 0f)
         {
             // Perform the detection and destroy bullets within the circle around the player
             DestroyBulletsInCircle();
