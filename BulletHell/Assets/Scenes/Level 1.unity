@@ -2622,8 +2622,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d3b9a4ea6b37c442815a911c3002619, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayBeforeChange: 2
-  sceneToLoad: 
+  delayBeforeChange: 0
+  sceneToLoad: Win PC
 --- !u!212 &125947494
 SpriteRenderer:
   m_ObjectHideFlags: 0
