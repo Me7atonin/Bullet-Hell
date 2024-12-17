@@ -22,7 +22,7 @@ public class Win : MonoBehaviour
     {
         Debug.Log(collision.gameObject.name);
         //IF player touches Dorito, load scene win
-        if(collision.gameObject.tag == "Chip" )
+        if(collision.gameObject.tag == "Win" )
         {
            
             
