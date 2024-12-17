@@ -2602,28 +2602,15 @@ GameObject:
   m_Component:
   - component: {fileID: 125947495}
   - component: {fileID: 125947494}
-  - component: {fileID: 125947493}
+  - component: {fileID: 125947496}
+  - component: {fileID: 125947497}
   m_Layer: 0
   m_Name: Square
-  m_TagString: Untagged
+  m_TagString: Win
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &125947493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 125947492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d3b9a4ea6b37c442815a911c3002619, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  delayBeforeChange: 0
-  sceneToLoad: Win PC
 --- !u!212 &125947494
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2691,6 +2678,64 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &125947496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125947492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e795edeaf535d6443b749c1d71f5fe6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leveltoload: Win PC
+--- !u!61 &125947497
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125947492}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &126028277
 GameObject:
   m_ObjectHideFlags: 0
@@ -4694,11 +4739,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 674015742714913145, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.86
+      value: 3.78
       objectReference: {fileID: 0}
     - target: {fileID: 674015742714913145, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 198.97
+      value: 198.5
       objectReference: {fileID: 0}
     - target: {fileID: 674015742714913145, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4764,7 +4809,10 @@ PrefabInstance:
     - {fileID: 5307288436292482704, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1605452631890082235, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1063124862}
   m_SourcePrefab: {fileID: 100100000, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
 --- !u!4 &202145544 stripped
 Transform:
@@ -18832,6 +18880,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 674015742714913145, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
   m_PrefabInstance: {fileID: 202145543}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1063124862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202145545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e795edeaf535d6443b749c1d71f5fe6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leveltoload: Win PC
 --- !u!1 &1067007081
 GameObject:
   m_ObjectHideFlags: 0
