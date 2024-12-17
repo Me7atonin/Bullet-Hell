@@ -2861,7 +2861,8 @@ PrefabInstance:
       propertyPath: healthText
       value: 
       objectReference: {fileID: 1009093321}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5307288436292482704, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -21415,7 +21416,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 202145545}
-  JumpSpeed: 20
+  JumpSpeed: 10
   GroundLayer:
     serializedVersion: 2
     m_Bits: 64
