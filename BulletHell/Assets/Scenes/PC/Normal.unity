@@ -4870,11 +4870,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 674015742714913145, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.32
+      value: -3.6
       objectReference: {fileID: 0}
     - target: {fileID: 674015742714913145, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 199.43
+      value: -6.2
       objectReference: {fileID: 0}
     - target: {fileID: 674015742714913145, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4930,16 +4930,12 @@ PrefabInstance:
       objectReference: {fileID: 3544697510464981286, guid: d53e1e7a4ad85244c96630f4a44893e6, type: 3}
     - target: {fileID: 6340119950032474797, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
       propertyPath: health
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6340119950032474797, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
       propertyPath: healthText
       value: 
       objectReference: {fileID: 1009093321}
-    - target: {fileID: 6340119950032474797, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
-      propertyPath: gameOverSceneName
-      value: Defeat
-      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5307288436292482704, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
     m_RemovedGameObjects: []
@@ -12230,8 +12226,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 129.66093, y: -34.609085}
-  m_SizeDelta: {x: 3135.9067, y: 1731.3645}
+  m_AnchoredPosition: {x: 30.425396, y: -65.50264}
+  m_SizeDelta: {x: 2438.3398, y: 1533.9568}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &724492599
 MonoBehaviour:
