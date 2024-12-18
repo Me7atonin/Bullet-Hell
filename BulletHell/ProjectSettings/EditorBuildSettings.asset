@@ -96,7 +96,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Mobile S/Defeat M 3.unity
     guid: 8e7e2e68afe140649b0bfd31b56917c0
   - enabled: 1
-    path: Assets/Scenes/MasochismWin.unity
+    path: Assets/Scenes/MasochismWIn.unity
     guid: a73526c1306c6ad4b8bc541384f28400
   - enabled: 1
     path: Assets/Scenes/M_Scene.unity
