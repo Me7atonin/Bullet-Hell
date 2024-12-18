@@ -5159,11 +5159,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 674015742714913145, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.7
+      value: 7.4
       objectReference: {fileID: 0}
     - target: {fileID: 674015742714913145, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.5
+      value: 199.1
       objectReference: {fileID: 0}
     - target: {fileID: 674015742714913145, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5225,6 +5225,10 @@ PrefabInstance:
       propertyPath: healthText
       value: 
       objectReference: {fileID: 1009093321}
+    - target: {fileID: 6340119950032474797, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
+      propertyPath: gameOverSceneName
+      value: Defeat 3
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5307288436292482704, guid: 8ffa108271381e1488e03cb84d5b9c36, type: 3}
     m_RemovedGameObjects: []
@@ -13289,8 +13293,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.6015, y: 1.6014}
-  m_SizeDelta: {x: 1922.8604, y: 1088.6311}
+  m_AnchoredPosition: {x: 62.452194, y: 90.05647}
+  m_SizeDelta: {x: 2599.9995, y: 1698.667}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &724492599
 MonoBehaviour:
@@ -13305,7 +13309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.21698111, g: 0.21698111, b: 0.21698111, a: 0.42745098}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.98039216}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

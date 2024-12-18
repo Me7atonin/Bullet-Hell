@@ -213,7 +213,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Medium 1
+          m_StringArgument: Normal M
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &59418025
@@ -345,7 +345,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Hard 1
+          m_StringArgument: Hard M
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &104829052
@@ -599,7 +599,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -746,7 +746,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Easy 1
+          m_StringArgument: Easy M
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &524435355
@@ -1276,7 +1276,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Masochist 1
+          m_StringArgument: Masochist M
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &2010343649
