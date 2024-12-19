@@ -1,312 +1,199 @@
+using System.Collections;  // Ensure this is included
 using UnityEngine;
 
-public class EnemyBehavior : MonoBehaviour
+public class EnemyChase : MonoBehaviour
 {
-    public float moveSpeed = 5f; // Normal movement speed
-    public float chaseSpeed = 8f; // Speed when chasing the player
-    public float jumpForce = 15f; // Jump force for the enemy
-    public float attackIntervalMin = 3f; // Minimum time between attacks
-    public float attackIntervalMax = 6f; // Maximum time between attacks
-    public GameObject bulletPrefab; // Bullet prefab for shooting
-    public Transform shootPoint; // Point from which the bullets will be shot
-    public LayerMask groundLayer; // Ground detection layer
-    public Transform player; // Reference to the player object
-    public float slamSpeed = 30f; // Speed for slam attack
-    public float spinAttackDuration = 3f; // Duration for spin attack
-    public float spinAttackSpeed = 100f; // Speed for spinning bullets
-    public float edgeDetectionDistance = 1f; // Distance to detect the edge
-    public LayerMask edgeLayer; // Layer for detecting edges (e.g., walls)
-    public float stopTime = 2f; // Time to stop before choosing an attack
-    public float bulletCount = 5f; // Number of bullets to shoot in attack 3 and 4
-    public float slamAttackDuration = 10f; // Duration for the Slam Attack
+    [Header("Enemy Settings")]
+    public float moveSpeed = 3f;  // Speed at which the enemy moves
+    public float reducedSpeedFactor = 0.1f;  // Reduced speed factor during attack (e.g., 0.1 for 10% speed)
+    public float detectionRange = 10f;  // Range within which the enemy detects the player
+    public float attackRange = 2f;  // Range at which the enemy will perform the spin attack
+    public Transform player;  // Reference to the player's transform
+    public GameObject spinPrefab;  // Prefab to spawn (the object that will spin)
+    public float attackCooldown = 2f;  // Cooldown period after each attack
+    public float pauseBeforeAttack = 1f;  // Time to wait before executing the spin attack
+    public float spinRadius = 2f;  // Radius around the enemy where the prefab will rotate
+    public float spinDuration = 1f;  // Duration for the 180-degree spin
 
-    // Public Floats for controlling attack availability
-    public float slamAttackEnabled = 1f; // 0 = disabled, 1 = enabled
-    public float runAttackEnabled = 1f; // 0 = disabled, 1 = enabled
-    public float spinAttackEnabled = 1f; // 0 = disabled, 1 = enabled
-    public float shootAtPlayerEnabled = 1f; // 0 = disabled, 1 = enabled
-    public float growthAttackEnabled = 1f; // 0 = disabled, 1 = enabled
+    [Header("Platform Detection")]
+    public float groundCheckDistance = 1f;  // Distance to check for ground (platform detection)
+    public LayerMask groundLayer;  // Ground layer to detect edges of platforms
 
     private Rigidbody2D rb;
-    private bool isChasing = true;
-    private bool isPerformingAttack = false;
-    private float nextAttackTime;
-    private Vector2 lastPlayerPosition;
-    private float attackCooldown;
-    private bool isMovingRight = true; // Track current direction for RunAttack
-    private float stopTimer = 0f; // Timer to control stop time
-    private float attackTimer = 0f; // Timer to control the attack duration
-    private float originalScaleX;
+    private bool isPlayerInRange = false;  // Whether the player is within detection range
+    private bool isFacingRight = true;  // Tracks if the enemy is facing right or left
+    private bool canAttack = true;  // Flag to check if the enemy can attack (after cooldown)
 
-    private enum AttackType
+    void Start()
     {
-        None,
-        SlamAttack,
-        RunAttack,
-        SpinAttack,
-        ShootAtPlayer,
-        GrowthAndRotationAttack
-    }
-
-    private AttackType currentAttack = AttackType.None;
-
-    private void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        originalScaleX = transform.localScale.x; // Store the original scale
-        nextAttackTime = Random.Range(attackIntervalMin, attackIntervalMax);
-        lastPlayerPosition = player.position;
-    }
-
-    private void Update()
-    {
-        if (!isPerformingAttack)
+        rb = GetComponent<Rigidbody2D>();  // Get Rigidbody2D component
+        if (player == null)
         {
-            if (isChasing)
-            {
-                ChasePlayer();
-            }
+            // Automatically find the player if not assigned
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+        }
+    }
 
-            if (stopTimer > 0)
-            {
-                stopTimer -= Time.deltaTime; // Decrease the stop timer
-                return; // Wait until stopTimer finishes before proceeding
-            }
+    void Update()
+    {
+        DetectPlayer();
+        if (isPlayerInRange)
+        {
+            ChasePlayer();
+            TrySpinAttack();
+        }
+        CheckPlatformEdge();
+    }
 
-            nextAttackTime -= Time.deltaTime;
-
-            if (nextAttackTime <= 0)
-            {
-                // After the stop time, choose a random attack
-                ChooseRandomAttack();
-            }
+    // Detect if the player is within range
+    void DetectPlayer()
+    {
+        if (player != null && Vector2.Distance(transform.position, player.position) <= detectionRange)
+        {
+            isPlayerInRange = true;
         }
         else
         {
-            PerformAttack();
+            isPlayerInRange = false;
         }
     }
 
-    private void ChasePlayer()
+    // Move the enemy toward the player
+    void ChasePlayer()
     {
-        if (player.position.x > transform.position.x)
+        // Only chase the player if the enemy is not preparing to attack
+        if (canAttack)
         {
-            // Move right towards the player
-            rb.velocity = new Vector2(chaseSpeed, rb.velocity.y);
+            MoveAtNormalSpeed();
         }
         else
         {
-            // Move left towards the player
-            rb.velocity = new Vector2(-chaseSpeed, rb.velocity.y);
-        }
-
-        // If the player is above the enemy, make the enemy jump towards the player
-        if (Mathf.Abs(player.position.y - transform.position.y) > 2f && IsGrounded())
-        {
-            JumpTowardsPlayer();
+            MoveAtReducedSpeed();
         }
     }
 
-    private void JumpTowardsPlayer()
+    // Normal movement speed (when not attacking)
+    void MoveAtNormalSpeed()
     {
-        if (IsGrounded())
+        Vector2 targetPosition = new Vector2(player.position.x, transform.position.y);  // Keep enemy on same vertical level
+        Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;  // Convert transform.position to Vector2 for correct subtraction
+
+        rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y);  // Move horizontally, maintain vertical velocity
+    }
+
+    // Reduced movement speed during attack (using the reducedSpeedFactor)
+    void MoveAtReducedSpeed()
+    {
+        Vector2 targetPosition = new Vector2(player.position.x, transform.position.y);
+        Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
+        rb.velocity = new Vector2(direction.x * moveSpeed * reducedSpeedFactor, rb.velocity.y);  // Reduced speed during attack
+    }
+
+    // Flip the enemy's direction when needed
+    void Flip()
+    {
+        if ((isFacingRight && transform.position.x > player.position.x) || (!isFacingRight && transform.position.x < player.position.x))
         {
-            Vector2 jumpDirection = (player.position - transform.position).normalized;
-            rb.velocity = new Vector2(rb.velocity.x, 0); // Reset vertical velocity
-            rb.AddForce(new Vector2(jumpDirection.x * 5f, jumpForce), ForceMode2D.Impulse);
+            isFacingRight = !isFacingRight;
+            Vector3 scale = transform.localScale;
+            scale.x *= -1;  // Flip the enemy's sprite
+            transform.localScale = scale;
         }
     }
 
-    private bool IsGrounded()
+    // Check if the enemy is about to fall off the platform and flip if necessary
+    void CheckPlatformEdge()
     {
-        // Check if the enemy is on the ground
-        return Physics2D.Raycast(transform.position, Vector2.down, 0.5f, groundLayer);
-    }
-
-    private void ChooseRandomAttack()
-    {
-        // Stop the enemy for 2 seconds before choosing an attack
-        stopTimer = stopTime;
-
-        int attackIndex = Random.Range(0, 5);
-
-        // Choose one of the five attack types randomly based on the enabled floats
-        switch (attackIndex)
+        if (IsGrounded() && !IsGroundedInDirection())
         {
-            case 0:
-                if (slamAttackEnabled == 1f) currentAttack = AttackType.SlamAttack;
-                break;
-            case 1:
-                if (runAttackEnabled == 1f) currentAttack = AttackType.RunAttack;
-                break;
-            case 2:
-                if (spinAttackEnabled == 1f) currentAttack = AttackType.SpinAttack;
-                break;
-            case 3:
-                if (shootAtPlayerEnabled == 1f) currentAttack = AttackType.ShootAtPlayer;
-                break;
-            case 4:
-                if (growthAttackEnabled == 1f) currentAttack = AttackType.GrowthAndRotationAttack;
-                break;
-        }
-
-        isPerformingAttack = true;
-        attackCooldown = 0;
-        attackTimer = 0f; // Reset attack timer when a new attack starts
-    }
-
-    private void PerformAttack()
-    {
-        attackTimer += Time.deltaTime; // Increase the attack duration timer
-
-        // Perform the selected attack
-        switch (currentAttack)
-        {
-            case AttackType.SlamAttack:
-                SlamAttack();
-                break;
-            case AttackType.RunAttack:
-                RunAttack();
-                break;
-            case AttackType.SpinAttack:
-                SpinAttack();
-                break;
-            case AttackType.ShootAtPlayer:
-                ShootAtPlayer();
-                break;
-            case AttackType.GrowthAndRotationAttack:
-                GrowthAndRotationAttack();
-                break;
-        }
-
-        // Check if the attack duration has passed and end the attack if necessary
-        if (attackTimer >= slamAttackDuration && currentAttack == AttackType.SlamAttack)
-        {
-            EndAttack();
-        }
-        else if (attackTimer >= 3f && currentAttack != AttackType.GrowthAndRotationAttack) // For other attacks, end after a shorter time
-        {
-            EndAttack();
+            Flip();
         }
     }
 
-    private void SlamAttack()
+    // Check if the enemy is grounded (i.e., standing on the platform)
+    bool IsGrounded()
     {
-        // Make sure the enemy is grounded before performing the slam attack
-        if (IsGrounded() && attackTimer < slamAttackDuration)
-        {
-            // Reset vertical velocity before applying the slam force
-            rb.velocity = new Vector2(rb.velocity.x, 0);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayer);
+        return hit.collider != null;
+    }
 
-            // Apply a high force downwards to simulate the slam attack
-            rb.AddForce(Vector2.down * slamSpeed, ForceMode2D.Impulse);
+    // Check if the ground is detected in the direction the enemy is facing
+    bool IsGroundedInDirection()
+    {
+        Vector2 direction = isFacingRight ? Vector2.right : Vector2.left;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, groundCheckDistance, groundLayer);
+        return hit.collider != null;
+    }
+
+    // Try to perform a spin attack if the player is close enough
+    void TrySpinAttack()
+    {
+        // Check if the player is within the attack range and if the enemy is allowed to attack
+        if (Vector2.Distance(transform.position, player.position) <= attackRange && canAttack)
+        {
+            StartCoroutine(WaitBeforeAttack());  // Start the wait before attack coroutine
         }
     }
 
-    private void RunAttack()
+    // Coroutine to handle the delay before the spin attack
+    IEnumerator WaitBeforeAttack()
     {
-        // The enemy runs back and forth extremely quickly
-        DetectEdgeAndMove();
+        canAttack = false;  // Disable further attacks during cooldown
 
-        attackCooldown += Time.deltaTime;
-        if (attackCooldown >= 2f) // Run for 2 seconds
-        {
-            EndAttack();
-        }
+        // Move the enemy at reduced speed during the attack
+        float originalSpeed = moveSpeed;  // Store the original speed
+        moveSpeed *= reducedSpeedFactor;  // Set move speed to the reduced speed (based on reducedSpeedFactor)
+
+        // Wait for the specified amount of time before attacking
+        yield return new WaitForSeconds(pauseBeforeAttack);  // Pause before attacking
+
+        // After the delay, spawn the spin prefab and perform the attack
+        SpawnSpinPrefab();
+
+        // Wait for the cooldown before enabling another attack
+        yield return new WaitForSeconds(attackCooldown);
+
+        moveSpeed = originalSpeed;  // Restore the original speed
+        canAttack = true;  // Re-enable attacks after cooldown
     }
 
-    private void DetectEdgeAndMove()
+    // Spawn the spinning prefab at the enemy's position and make it spin
+    void SpawnSpinPrefab()
     {
-        // Check for the edge in front of the enemy using raycasting
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right * (isMovingRight ? 1 : -1), edgeDetectionDistance, edgeLayer);
+        // Determine the spawn position, offset slightly in front of the enemy
+        Vector3 spawnPosition = transform.position + (isFacingRight ? Vector3.right : Vector3.left) * spinRadius;
+        GameObject spinObject = Instantiate(spinPrefab, spawnPosition, Quaternion.identity);
 
-        if (hit.collider == null)
-        {
-            // If no ground is detected in front, reverse direction
-            isMovingRight = !isMovingRight;
-        }
-
-        // Move in the current direction
-        rb.velocity = new Vector2((isMovingRight ? 1 : -1) * slamSpeed, rb.velocity.y);
+        // Make the prefab rotate 180 degrees around the enemy
+        StartCoroutine(RotateAroundEnemy(spinObject));
     }
 
-    private void SpinAttack()
+    // Coroutine to rotate the prefab 180 degrees around the enemy
+    IEnumerator RotateAroundEnemy(GameObject spinObject)
     {
-        // The enemy shoots bullets in a spinning pattern
-        attackCooldown += Time.deltaTime;
-        if (attackCooldown < spinAttackDuration)
-        {
-            // Shoot the number of bullets based on bulletCount
-            float angleStep = 360f / bulletCount;
-            for (float angle = 0f; angle < 360f; angle += angleStep)
-            {
-                ShootBulletAtAngle(angle);
-            }
-        }
-        else
-        {
-            EndAttack();
-        }
-    }
+        float elapsedTime = 0f;
 
-    private void ShootAtPlayer()
-    {
-        // The enemy shoots bullets at the player's position
-        attackCooldown += Time.deltaTime;
-        if (attackCooldown < 2f)
+        // The center of rotation is the enemy's position
+        Vector3 rotationCenter = transform.position;
+
+        // Determine the direction for rotation
+        float angle = 0f;
+        float endAngle = 180f * (isFacingRight ? 1 : -1);  // Rotate clockwise or counterclockwise depending on facing direction
+
+        // Rotate the prefab smoothly over the specified duration
+        while (elapsedTime < spinDuration)
         {
-            // Shoot the number of bullets based on bulletCount
-            for (int i = 0; i < bulletCount; i++)
-            {
-                ShootBulletAtPlayer();
-            }
+            // Calculate the current angle based on the elapsed time and duration
+            angle = Mathf.Lerp(0f, endAngle, elapsedTime / spinDuration);
+
+            // Rotate the prefab around the enemy
+            spinObject.transform.position = rotationCenter + (Quaternion.Euler(0f, 0f, angle) * Vector3.right * spinRadius);
+
+            elapsedTime += Time.deltaTime;  // Increase elapsed time by the frame duration
+            yield return null;
         }
-        else
-        {
-            EndAttack();
-        }
-    }
 
-    private void GrowthAndRotationAttack()
-    {
-        // The enemy stops, grows 3 times its size, and starts rotating
-
-        // Scale up the enemy
-        if (attackTimer < 3f)
-        {
-            transform.localScale = new Vector3(originalScaleX * 3f, originalScaleX * 3f, 1f);
-            transform.Rotate(0f, 0f, 50f * Time.deltaTime); // Rotate the enemy continuously
-        }
-        else
-        {
-            // After 3 seconds, return to the original size
-            transform.localScale = new Vector3(originalScaleX, originalScaleX, 1f);
-            EndAttack();
-        }
-    }
-
-    private void ShootBulletAtAngle(float angle)
-    {
-        // Shoot a bullet at the given angle
-        GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
-        bullet.transform.Rotate(0f, 0f, angle);
-        Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
-        bulletRb.velocity = bullet.transform.right * 10f; // Shoot in the direction of the angle
-    }
-
-    private void ShootBulletAtPlayer()
-    {
-        // Shoot a bullet directly at the player
-        GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
-        Vector2 directionToPlayer = (player.position - shootPoint.position).normalized;
-        bullet.GetComponent<Rigidbody2D>().velocity = directionToPlayer * 10f;
-    }
-
-    private void EndAttack()
-    {
-        // Reset after performing the attack
-        currentAttack = AttackType.None;
-        isPerformingAttack = false;
-        nextAttackTime = Random.Range(attackIntervalMin, attackIntervalMax); // Set a new random interval before the next attack
+        // Ensure the prefab ends up at the exact final position after rotation
+        spinObject.transform.position = rotationCenter + (Quaternion.Euler(0f, 0f, endAngle) * Vector3.right * spinRadius);
     }
 }
